@@ -580,8 +580,15 @@ function findLongestIncreasingSubsequence(nums) {
  *  propagateItemsByPositionIndex([ 'a', 'b', 'c', null ]) => [ 'a', 'b', 'b', 'c', 'c', 'c',  null, null, null, null ]
  *  propagateItemsByPositionIndex([ 1,2,3,4,5 ]) => [ 1, 2, 2, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 5 ]
  */
-function propagateItemsByPositionIndex(/* arr */) {
-  throw new Error('Not implemented');
+function propagateItemsByPositionIndex(arr) {
+  return arr
+    .reduce((acc, item, pos) => {
+      const n = pos + 1;
+      const accItem = new Array(n).fill(item);
+      acc.push(accItem);
+      return acc;
+    }, [])
+    .flat(Infinity);
 }
 
 /**
@@ -597,8 +604,14 @@ function propagateItemsByPositionIndex(/* arr */) {
  *    shiftArray(['a', 'b', 'c', 'd'], -1) => ['b', 'c', 'd', 'a']
  *    shiftArray([10, 20, 30, 40, 50], -3) => [40, 50, 10, 20, 30]
  */
-function shiftArray(/* arr, n */) {
-  throw new Error('Not implemented');
+function shiftArray(arr, n) {
+  const number = Math.abs(n);
+  const sign = Math.sign(n);
+  const firstPart = sign > 0 ? arr.splice(-n) : arr.splice(0, number);
+  const secondPart = arr;
+  return sign > 0
+    ? [...firstPart, ...secondPart]
+    : [...secondPart, ...firstPart];
 }
 
 /**
@@ -614,8 +627,23 @@ function shiftArray(/* arr, n */) {
  *   sortDigitNamesByNumericOrder([ 'nine','eight','nine','eight' ]) => [ 'eight','eight','nine','nine']
  *   sortDigitNamesByNumericOrder([ 'one','one','one','zero' ]) => [ 'zero','one','one','one' ]
  */
-function sortDigitNamesByNumericOrder(/* arr */) {
-  throw new Error('Not implemented');
+function sortDigitNamesByNumericOrder(arr) {
+  const arrOfNumbers = [
+    'zero',
+    'one',
+    'two',
+    'three',
+    'four',
+    'five',
+    'six',
+    'seven',
+    'eight',
+    'nine',
+  ];
+  const result = arr.sort(
+    (a, b) => arrOfNumbers.indexOf(a) - arrOfNumbers.indexOf(b)
+  );
+  return result;
 }
 
 /**
@@ -637,8 +665,14 @@ function sortDigitNamesByNumericOrder(/* arr */) {
  *   swapHeadAndTail([]) => []
  *
  */
-function swapHeadAndTail(/* arr */) {
-  throw new Error('Not implemented');
+function swapHeadAndTail(arr) {
+  const condition = arr.length % 2 === 0;
+  const n = condition ? arr.length / 2 : Math.round(arr.length / 2);
+  const firstPart = arr.splice(n);
+  const middlePart = condition ? [] : arr.splice(-1);
+  return condition
+    ? [...firstPart, ...arr]
+    : [...firstPart, ...middlePart, ...arr];
 }
 
 module.exports = {
